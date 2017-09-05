@@ -16438,20 +16438,20 @@ ZwAAAABJRU5ErkJggg==
 <p>This result is similar to my optimal policy, but a little different. The improved Q-Learning algorithm considered right/left action as equally rewarded, but my judgement above suggests that the actions should get different rewards. This is because the agent should consider that when there is an oncoming car to the left, then the agent does not have the right-of-way, and therefore it's significantly less optimal to take a left turn than a right one.</p>
 <p>Here are some more examples.<br>
 (<code>right</code>, <code>green</code>, <code>left</code>, None)<br>
--- forward : 0.06
--- right : 0.33 
+-- forward : 0.06<br>
+-- right : 0.33<br>
 -- left : 0.02<br>
 -- None : -0.25</p>
 <p>In this case there is a green right, so the car should not idle. So, <code>None</code> action should get negative rewards. The waypoint for the car is <code>right</code>, so the reward is the biggest.</p>
 <p>(<code>forward</code>, <code>red</code>, None, None)<br>
--- forward : -4.10
+-- forward : -4.10<br>
 -- right : 0.28<br>
 -- left : -4.65<br>
 -- None : 1.14</p>
 <p>In this above case, although there are no car left and oncoming, the car learned that it needs to stop for red light. Also, as a suboptimal policy, the car has learned that it can be okay to turn right. Or, forward/left reaction should get negative rewards.</p>
 <p>Here is one of the examples where the smartcab did not learn the optimal policy.</p>
 <p>(<code>left</code>, <code>red</code>, <code>forward</code>, None)<br>
--- forward : -3.48
+-- forward : -3.48<br>
 -- right : 0.30<br>
 -- left : -1.98<br>
 -- None : -2.27</p>

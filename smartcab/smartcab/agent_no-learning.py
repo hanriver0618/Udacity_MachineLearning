@@ -38,7 +38,6 @@ class LearningAgent(Agent):
         # Update epsilon using a decay function of your choice
         # Update additional class parameters as needed
         # If 'testing' is True, set epsilon and alpha to 0
-
         return None
 
     def build_state(self):
@@ -73,11 +72,8 @@ class LearningAgent(Agent):
         ## TO DO ##
         ###########
         # Calculate the maximum Q-value of all actions for a given state
-        maxQ = -1000.0
 
-        for action in self.Q[state]:
-            if maxQ < self.Q[state][action]:
-                maxQ = self.Q[state][action]
+        maxQ = [k for k,v in self.Q[state].items() if v == max(self.Q[state].values())]
         return maxQ
 
     def createQ(self, state):
@@ -89,9 +85,6 @@ class LearningAgent(Agent):
         # When learning, check if the 'state' is not in the Q-table
         # If it is not, create a new dictionary for that state
         #   Then, for each action available, set the initial Q-value to 0.0
-#        if state not in self.Q:
-#            self.Q[state] = {'left': 0, 'right':0, 'forward':0, None:0}
-
         return
 
     def choose_action(self, state):
@@ -111,21 +104,14 @@ class LearningAgent(Agent):
         # Otherwise, choose an action with the highest Q-value for the current state
         # Be sure that when choosing an action with highest Q-value that you randomly select between actions that "tie".
 
-        if not self.learning:
+        if (self.learning==False) | (random.random() <=self.epsilon): 
                 action = random.choice(self.valid_actions)
         else:
-                if self.epsilon > random.random():
-                        action = random.choice(self.valid_actions)
+                if len(self.get_maxQ(state)) == 1:
+                        action = self.get_maxQ(state)[0]
                 else:
-                        valid_actions = []
-                        maxQ = self.get_maxQ(state)
-                        for act in self.Q[state]:
-                            if maxQ == self.Q[state][act]:
-                                valid_actions.append(act)
-                        action = random.choice(valid_actions)
-
+                        action = random.choice(self.get_maxQ(state))
         return action
-
 
     def learn(self, state, action, reward):
         """ The learn function is called after the agent completes an action and
@@ -188,7 +174,7 @@ def run():
     #   display      - set to False to disable the GUI if PyGame is enabled
     #   log_metrics  - set to True to log trial and simulation results to /logs
     #   optimized    - set to True to change the default log file name
-    sim = Simulator(env, update_delay=0.01, log_metrics=True, display=True)
+    sim = Simulator(env,update_delay=0.01,log_metrics=True)
     
     ##############
     # Run the simulator

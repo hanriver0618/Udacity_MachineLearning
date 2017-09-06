@@ -91,13 +91,8 @@ class LearningAgent(Agent):
         # When learning, check if the 'state' is not in the Q-table
         # If it is not, create a new dictionary for that state
         #   Then, for each action available, set the initial Q-value to 0.0
-        if self.learning:
-                if state not in self.Q:
-                    self.Q[state] = dict()
-                    self.Q[state][None] = 0
-                    self.Q[state]['forward'] = 0
-                    self.Q[state]['left'] = 0
-                    self.Q[state]['right'] = 0
+        if self.learning and state not in self.Q.keys():
+		self.Q[state] = {a : 0.0 for a in self.valid_actions}
         return
 
     def choose_action(self, state):

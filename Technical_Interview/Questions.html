@@ -12448,7 +12448,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[326]:</div>
+<div class="prompt input_prompt">In&nbsp;[339]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1">## Gind the element in a singly linked list that&#39;s m elements from the end</span>
@@ -12463,26 +12463,16 @@ div#notebook {
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="bp">None</span>
         
-    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_data</span><span class="p">):</span>
-        <span class="n">new_node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">new_data</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="n">new_node</span>
-            <span class="k">return</span>
-        <span class="n">last</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span>
-        <span class="k">while</span> <span class="p">(</span><span class="n">last</span><span class="o">.</span><span class="n">next</span><span class="p">):</span>
-            <span class="n">last</span> <span class="o">=</span> <span class="n">last</span><span class="o">.</span><span class="n">next</span>
-        <span class="n">last</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">new_node</span>
-        
     <span class="k">def</span> <span class="nf">push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">new_data</span><span class="p">):</span>
         <span class="n">new_node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">new_data</span><span class="p">)</span>
         <span class="n">new_node</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="n">new_node</span>
         
-    <span class="k">def</span> <span class="nf">printList</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span>
-        <span class="k">while</span> <span class="p">(</span><span class="n">node</span><span class="p">):</span>
-            <span class="k">print</span> <span class="n">node</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
-            <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">next</span>
+<span class="c1">#    def printList(self):</span>
+<span class="c1">#        node = self.head</span>
+<span class="c1">#        while (node):</span>
+<span class="c1">#            print node.data,</span>
+<span class="c1">#            node = node.next</span>
 
 <span class="k">def</span> <span class="nf">question5</span><span class="p">(</span><span class="n">ll</span><span class="p">,</span><span class="n">m</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">ll</span><span class="o">==</span><span class="bp">None</span><span class="p">:</span>
@@ -12505,36 +12495,22 @@ div#notebook {
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[330]:</div>
+<div class="prompt input_prompt">In&nbsp;[340]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1">## ex1</span>
 <span class="n">ll</span> <span class="o">=</span> <span class="n">LinkedList</span><span class="p">()</span>
-<span class="n">ll</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ll</span><span class="o">.</span><span class="n">head</span><span class="o">=</span><span class="n">Node</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">ll</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
 <span class="n">ll</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="n">ll</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">ll</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 <span class="n">ll</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
 <span class="n">ll</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<span class="n">ll</span><span class="o">.</span><span class="n">printList</span><span class="p">()</span>
+<span class="c1">#ll.printList()</span>
 
 <span class="n">question5</span><span class="p">(</span><span class="n">ll</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
@@ -12547,13 +12523,7 @@ div#notebook {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>3 50 10 1 5 6 2</pre>
-</div>
-</div>
-
-<div class="output_area"><div class="prompt output_prompt">Out[330]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[340]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12562,25 +12532,18 @@ div#notebook {
 
 </div>
 
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[331]:</div>
+<div class="prompt input_prompt">In&nbsp;[341]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1">## ex2</span>
 <span class="n">ll</span> <span class="o">=</span> <span class="n">LinkedList</span><span class="p">()</span>
-<span class="n">ll</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">ll</span><span class="o">.</span><span class="n">head</span><span class="o">=</span><span class="n">Node</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 <span class="n">ll</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
 <span class="n">ll</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
 <span class="n">ll</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
@@ -12590,7 +12553,7 @@ div#notebook {
 <span class="n">ll</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="n">ll</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">ll</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">ll</span><span class="o">.</span><span class="n">printList</span><span class="p">()</span>
+<span class="c1">#ll.printList()</span>
 
 <span class="n">question5</span><span class="p">(</span><span class="n">ll</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
 </pre></div>
@@ -12603,13 +12566,7 @@ div#notebook {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>1 2 3 4 5 6 7 8 9 10</pre>
-</div>
-</div>
-
-<div class="output_area"><div class="prompt output_prompt">Out[331]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[341]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12618,25 +12575,18 @@ div#notebook {
 
 </div>
 
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[333]:</div>
+<div class="prompt input_prompt">In&nbsp;[342]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1">## ex3</span>
 <span class="n">ll</span> <span class="o">=</span> <span class="n">LinkedList</span><span class="p">()</span>
-<span class="n">ll</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">ll</span><span class="o">.</span><span class="n">head</span><span class="o">=</span><span class="n">Node</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
 <span class="n">ll</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
 <span class="n">ll</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
 <span class="n">ll</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
@@ -12644,7 +12594,7 @@ div#notebook {
 <span class="n">ll</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">ll</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
 <span class="n">ll</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
-<span class="n">ll</span><span class="o">.</span><span class="n">printList</span><span class="p">()</span>
+<span class="c1">#ll.printList()</span>
 
 <span class="n">question5</span><span class="p">(</span><span class="n">ll</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
@@ -12657,26 +12607,13 @@ div#notebook {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>12 8 2 3 5 7 9 11</pre>
-</div>
-</div>
-
-<div class="output_area"><div class="prompt output_prompt">Out[333]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[342]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
 <pre>11</pre>
 </div>
 
-</div>
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-</pre>
-</div>
 </div>
 
 </div>

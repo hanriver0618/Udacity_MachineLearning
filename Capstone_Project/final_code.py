@@ -201,3 +201,72 @@ df = pd.DataFrame(data={'file': df_test['file'], 'species': y_pred})
 df_sort = df.sort_values(by=['file'])
 df_sort.to_csv('final.csv', index=False)
 
+## Appendix : Model with Xception
+labels = listdir("./train")
+train_files, train_targets = load_dataset('./train')
+
+y_train = train_targets
+train_tensors = imgs_to_tensor(train_files,128).astype('float32')/255
+
+sss = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=42) 
+for train_index, test_index in sss.split(train_tensors, y_train):
+    train_tensors, valid_tensors = train_tensors[train_index], train_tensors[test_index]
+    y_train, y_valid = y_train[train_index], y_train[test_index]
+
+sss = StratifiedShuffleSplit(n_splits=1, test_size=0.5, random_state=42) 
+for train_index, test_index in sss.split(valid_tensors, y_valid):
+    valid_tensors, test_tensors = valid_tensors[train_index], valid_tensors[test_index]
+    y_valid, y_test = y_valid[train_index], y_valid[test_index]
+
+pre_train = Xception(input_shape=(128,128, 3), include_top=False, weights='imagenet', pooling='avg') 
+x = pre_train.output
+x = Dense(128, activation='relu')(x)
+x = Dropout(0.2)(x)
+predictions = Dense(12, activation='softmax')(x)
+model_Xception = Model(inputs=pre_train.input, outputs=predictions)
+
+model_Xception.compile(optimizer=Adam(lr=0.001), loss='categorical_crossentropy',metrics=['accuracy']) 
+
+checkpointer = ModelCheckpoint(filepath='weights.Xception.hdf5', 
+                               verbose=1, save_best_only=True)
+model_Xception.fit(train_tensors, y_train, 
+          validation_data=(valid_tensors, y_valid),
+          epochs=5, batch_size=32, callbacks=[checkpointer], verbose=1)
+
+model.load_weights('weights.Xception.hdf5')
+predictions = [np.argmax(model_Xception.predict(np.expand_dims(feature, axis=0))) 
+               for feature in test_tensors]
+y_pred = [labels[i] for i in predictions]
+test_list = y_test.argmax(axis=1)
+
+print(f1_score(test_list, predictions, average='weighted')) 
+print(accuracy_score(test_list,predictions))
+
+
+model_Xception.compile(loss='categorical_crossentropy', optimizer=optimizers.Adam(), metrics=['accuracy'])
+
+datagen = ImageDataGenerator( horizontal_flip=True, 
+                              vertical_flip=True)
+                                      
+checkpointer = [ EarlyStopping(monitor='val_loss', patience=5, verbose=0), 
+              ModelCheckpoint(filepath='weights.Xception_with_aug.hdf5', monitor='val_loss', save_best_only=True, verbose=0),
+              ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=2, verbose=0, mode='auto', epsilon=0.0001, cooldown=0, min_lr=0)]
+epochs=5
+batch_size=32
+model_Xception.fit_generator(datagen.flow(train_tensors, y_train, batch_size=batch_size),
+                    steps_per_epoch=len(train_tensors)/batch_size, 
+                    validation_data=datagen.flow(valid_tensors, y_valid, batch_size=batch_size), 
+                    validation_steps=len(valid_tensors)/batch_size,
+                    callbacks=checkpointer,
+                    epochs=epochs, 
+                    verbose=1)
+
+
+model_Xception.load_weights('weights.Xception_with_aug.hdf5')
+predictions = [np.argmax(model_Xception.predict(np.expand_dims(feature, axis=0))) 
+               for feature in test_tensors]
+y_pred = [labels[i] for i in predictions]
+test_list = y_test.argmax(axis=1)
+from sklearn.metrics import accuracy_score, log_loss, f1_score
+print(f1_score(test_list, predictions, average='weighted')) 
+print(accuracy_score(test_list,predictions))

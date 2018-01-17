@@ -36,7 +36,14 @@ categories = ['Black-grass', 'Charlock', 'Cleavers', 'Common Chickweed',
               'Maize', 'Scentless Mayweed', 'Shepherds Purse', 
               'Small-flowered Cranesbill', 'Sugar beet']
 
-## Preprocessing
+## Preprocessing 1 : load files and convert the labels for each seeding to binary class matrix
+def load_dataset(path):
+    data = load_files(path)
+    files = np.array(data['filenames'])
+    targets = np_utils.to_categorical(np.array(data['target']), 12)
+    return files, targets
+
+## Preprocessing 2: reshape all input images to the appropriate tensors with dimension, (Number, 3, width, height) 
 def img_to_tensor(img_path,size):
     img = image.load_img(img_path, target_size=(size,size))
     x = image.img_to_array(img)
@@ -46,13 +53,9 @@ def imgs_to_tensor(img_paths,size):
     list_of_tensors = [img_to_tensor(img_path,size) for img_path in tqdm(img_paths)]
     return np.vstack(list_of_tensors)
 
-def load_dataset(path):
-    data = load_files(path)
-    files = np.array(data['filenames'])
-    targets = np_utils.to_categorical(np.array(data['target']), 12)
-    return files, targets
 
-## train/validation/test split 
+
+## train(80%)/validation(10%)/test(10%) split 
 labels = listdir("./train")
 train_files, train_targets = load_dataset('./train')
 
@@ -202,6 +205,8 @@ df_sort.to_csv('final.csv', index=False)
 
 ## Appendix : Model with Xception
 ## I used the image size with 128 x 128 using Xception (47 x 47 is not allowed to use Xception model)
+
+## train(80%)/validation(10%)/test(10%) split
 labels = listdir("./train")
 train_files, train_targets = load_dataset('./train')
 
@@ -218,7 +223,7 @@ for train_index, test_index in sss.split(valid_tensors, y_valid):
     valid_tensors, test_tensors = valid_tensors[train_index], valid_tensors[test_index]
     y_valid, y_test = y_valid[train_index], y_valid[test_index]
 
-## load Xception model 
+## load Xception model from keras package
 pre_train = Xception(input_shape=(128,128, 3), include_top=False, weights='imagenet', pooling='avg')
 
 ## complete the model with Xception with a fully connected layer (and dropout)
